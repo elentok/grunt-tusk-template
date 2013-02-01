@@ -20,6 +20,14 @@ module.exports = (grunt) ->
           debouceDelay: 100
           interrupt: true
 
+      app_compass:
+        files: 'app/stylesheets/**/*.scss'
+        tasks: ['compass:app']
+        options:
+          debouceDelay: 100
+          interrupt: true
+
+
     compass:
       app:
         src: 'app/stylesheets'
