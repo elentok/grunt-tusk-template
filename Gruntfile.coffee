@@ -33,10 +33,11 @@ module.exports = (grunt) ->
         src: 'app/stylesheets'
         dest: 'public'
         images: '.'
+        importPath: 'components'
 
       
 
-  grunt.registerTask 'default', ['commoncoffee']
+  grunt.registerTask 'default', ['commoncoffee', 'compass']
 
 
 
