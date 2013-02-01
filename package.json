@@ -4,7 +4,8 @@
   "dependencies": {
     "grunt": ">=0.4",
     "grunt-commoncoffee": "https://github.com/elentok/grunt-commoncoffee/tarball/master",
-    "grunt-contrib-watch": ">= 0.2.0rc7"
+    "grunt-contrib-watch": ">= 0.2.0rc7",
+    "grunt-compass": "*"
   },
   "devDependencies": {
   }

@@ -2,6 +2,7 @@ module.exports = (grunt) ->
 
   grunt.loadNpmTasks 'grunt-commoncoffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-compass'
 
   grunt.initConfig
     commoncoffee:
@@ -18,6 +19,12 @@ module.exports = (grunt) ->
         options:
           debouceDelay: 100
           interrupt: true
+
+    compass:
+      app:
+        src: 'app/stylesheets'
+        dest: 'public'
+        images: '.'
 
       
 
