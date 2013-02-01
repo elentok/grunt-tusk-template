@@ -1,0 +1,9 @@
+{
+  "name": "my-grunt-template",
+  "version": "0.0.1",
+  "dependencies": {
+    "grunt": ">=0.4"
+  },
+  "devDependencies": {
+  }
+}
