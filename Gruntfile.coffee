@@ -3,6 +3,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-commoncoffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-compass'
+  grunt.loadNpmTasks 'grunt-contrib-jade'
 
   grunt.initConfig
     commoncoffee:
@@ -11,6 +12,12 @@ module.exports = (grunt) ->
           root: 'app/coffee'
         files:
           'public/app.js': ['app/coffee/**/*.coffee'],
+      vendor:
+        options:
+          wrap: false
+          runtime: false
+        files:
+          'public/vendor.js': ['components/jquery/jquery.js']
 
     watch:
       app_coffee:
@@ -35,9 +42,26 @@ module.exports = (grunt) ->
         images: '.'
         importPath: 'components'
 
+    jade:
+      dev:
+        options:
+          pretty: true
+          data:
+            debug: true
+            javascripts: ['vendor.js', 'app.js']
+        files:
+          'public/index.html': 'app/pages/index.jade'
+
+      production:
+        options:
+          data:
+            debug: false
+            javascripts: ['app.min.js']
+        files:
+          'public/index.html': 'app/pages/index.jade'
       
 
-  grunt.registerTask 'default', ['commoncoffee', 'compass']
+  grunt.registerTask 'default', ['commoncoffee', 'compass', 'jade:dev']
 
 
 

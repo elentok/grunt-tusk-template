@@ -6,6 +6,7 @@
     "grunt-commoncoffee": "https://github.com/elentok/grunt-commoncoffee/tarball/master",
     "grunt-contrib-watch": ">= 0.2.0rc7",
     "grunt-compass": "*",
+    "grunt-contrib-jade": ">=0.4.0rc7",
     "bower": "0.7.0"
   },
   "devDependencies": {
