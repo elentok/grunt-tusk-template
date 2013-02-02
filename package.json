@@ -20,6 +20,6 @@
   "devDependencies": {
   },
   "scripts": {
-    "start": "node_modules/.bin/supervisor -x grunt live"
+    "start": "node_modules/.bin/supervisor -w Gruntfile.coffee -x grunt live"
   }
 }

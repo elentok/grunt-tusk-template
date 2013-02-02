@@ -1,7 +1,9 @@
 {
   "dependencies": {
-    "bootstrap-sass": "*",
-    "mocha": "*",
-    "chai": "*"
+    "bootstrap-sass": "2.2.2",
+    "mocha": "1.8.1",
+    "chai": "1.4.2",
+    "sinon.js": "*",
+    "sinon-chai": "git://github.com/domenic/sinon-chai#2.3.1"
   }
 }

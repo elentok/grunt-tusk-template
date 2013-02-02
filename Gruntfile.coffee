@@ -8,7 +8,7 @@ initCommonCoffee = (grunt, config) ->
     files: 'app/coffee/**/*.coffee'
     tasks: ['commoncoffee:app']
 
-  config.regardetest_coffee =
+  config.regarde.test_coffee =
     files: 'test/**/*.coffee'
     tasks: ['commoncoffee:test']
 
@@ -37,7 +37,9 @@ initCommonCoffee = (grunt, config) ->
       files:
         'public/test_vendor.js': [
           'components/mocha/mocha.js',
-          'components/chai/chai.js'
+          'components/chai/chai.js',
+          'components/sinon.js/sinon.js',
+          'components/sinon-chai/lib/sinon-chai.js'
         ]
 
 # jade2html {{{1
