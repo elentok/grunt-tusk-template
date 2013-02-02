@@ -23,7 +23,22 @@ initCommonCoffee = (grunt, config) ->
         wrap: false
         runtime: false
       files:
-        'public/vendor.js': ['components/jquery/jquery.js']
+        'public/vendor.js': [
+          'components/jquery/jquery.js'
+          'components/bootstrap-sass/js/bootstrap-tooltip.js'
+          'components/bootstrap-sass/js/bootstrap-affix.js'
+          'components/bootstrap-sass/js/bootstrap-alert.js'
+          'components/bootstrap-sass/js/bootstrap-button.js'
+          'components/bootstrap-sass/js/bootstrap-carousel.js'
+          'components/bootstrap-sass/js/bootstrap-collapse.js'
+          'components/bootstrap-sass/js/bootstrap-dropdown.js'
+          'components/bootstrap-sass/js/bootstrap-modal.js'
+          'components/bootstrap-sass/js/bootstrap-popover.js'
+          'components/bootstrap-sass/js/bootstrap-scrollspy.js'
+          'components/bootstrap-sass/js/bootstrap-tab.js'
+          'components/bootstrap-sass/js/bootstrap-transition.js'
+          'components/bootstrap-sass/js/bootstrap-typeahead.js'
+        ]
     test:
       options:
         wrap: false
@@ -130,6 +145,12 @@ initCopy = (grunt, config) ->
     images:
       files: [
         {expand: true, cwd: 'app/images', src: ['**'], dest: 'public/images/' }
+      ]
+    vendor:
+      files: [
+        {
+          expand: true, cwd: 'components/bootstrap-sass/img',
+          src: ['**'], dest: 'public/images/' }
       ]
 
 # registerTasks {{{1
