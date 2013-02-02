@@ -80,9 +80,9 @@ initJade2html = (grunt, config) ->
       options:
         data:
           debug: false
-          javascripts: ['app.min.js']
+          javascripts: ['app.js']
       files:
-        'public/index.html': 'app/pages/index.jade'
+        'build/index.html': 'app/pages/index.jade'
 
 # jade2js {{{1
 
@@ -106,12 +106,18 @@ initCompass = (grunt, config) ->
   grunt.loadNpmTasks 'grunt-compass'
   config.regarde.app_compass =
     files: 'app/stylesheets/**/*.scss'
-    tasks: ['compass:app']
+    tasks: ['compass:dev']
 
   config.compass =
-    app:
+    dev:
       src: 'app/stylesheets'
       dest: 'public'
+      images: '.'
+      importPath: 'components'
+    production:
+      outputstyle: 'compressed'
+      src: 'app/stylesheets'
+      dest: 'build'
       images: '.'
       importPath: 'components'
 
@@ -139,18 +145,18 @@ initCopy = (grunt, config) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
   config.regarde.images =
     files: 'app/images/**/*'
-    tasks: ["copy:images"]
+    tasks: ["copy"]
 
   config.copy =
-    images:
+    dev:
       files: [
         {expand: true, cwd: 'app/images', src: ['**'], dest: 'public/images/' }
+        {expand: true, cwd: 'components/bootstrap-sass/img', src: ['**'], dest: 'public/images/' }
       ]
-    vendor:
+    production:
       files: [
-        {
-          expand: true, cwd: 'components/bootstrap-sass/img',
-          src: ['**'], dest: 'public/images/' }
+        {expand: true, cwd: 'app/images', src: ['**'], dest: 'build/images/' }
+        {expand: true, cwd: 'components/bootstrap-sass/img', src: ['**'], dest: 'build/images/' }
       ]
 
 initUglify = (grunt, config) ->
@@ -159,16 +165,16 @@ initUglify = (grunt, config) ->
   config.uglify =
     production:
       files:
-        'build/app.min.js': ['public/vendor.js', 'public/templates.js', 'public/app.js']
+        'build/app.js': ['public/vendor.js', 'public/templates.js', 'public/app.js']
   
 
 # registerTasks {{{1
 registerTasks = (grunt) ->
   grunt.registerTask 'default',
-    ['commoncoffee', 'compass', 'jade2html:dev', 'jade2js', 'copy']
+    ['commoncoffee', 'compass:dev', 'jade2html:dev', 'jade2js', 'copy']
 
   grunt.registerTask 'production',
-    ['commoncoffee', 'compass', 'jade2html:production', 'jade2js', 'copy', 'uglify']
+    ['commoncoffee', 'compass:production', 'jade2html:production', 'jade2js', 'copy', 'uglify']
 
   grunt.registerTask 'live',
     ['livereload-start', 'connect', 'regarde']
