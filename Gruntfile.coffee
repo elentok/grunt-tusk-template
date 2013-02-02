@@ -152,11 +152,13 @@ initCopy = (grunt, config) ->
       files: [
         {expand: true, cwd: 'app/images', src: ['**'], dest: 'public/images/' }
         {expand: true, cwd: 'components/bootstrap-sass/img', src: ['**'], dest: 'public/images/' }
+        {expand: true, cwd: 'components/font-awesome/font', src: ['**'], dest: 'public/fonts/' }
       ]
     production:
       files: [
         {expand: true, cwd: 'app/images', src: ['**'], dest: 'build/images/' }
         {expand: true, cwd: 'components/bootstrap-sass/img', src: ['**'], dest: 'build/images/' }
+        {expand: true, cwd: 'components/font-awesome/font', src: ['**'], dest: 'build/fonts/' }
       ]
 
 initUglify = (grunt, config) ->

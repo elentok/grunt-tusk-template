@@ -4,6 +4,7 @@
     "mocha": "1.8.1",
     "chai": "1.4.2",
     "sinon.js": "*",
-    "sinon-chai": "git://github.com/domenic/sinon-chai#2.3.1"
+    "sinon-chai": "git://github.com/domenic/sinon-chai#2.3.1",
+    "font-awesome": "3.0.2"
   }
 }
