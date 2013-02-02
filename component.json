@@ -5,6 +5,9 @@
     "chai": "1.4.2",
     "sinon.js": "*",
     "sinon-chai": "git://github.com/domenic/sinon-chai#2.3.1",
-    "font-awesome": "3.0.2"
+    "font-awesome": "3.0.2",
+    "underscore": "1.4.4",
+    "backbone": "0.9.10",
+    "marionette": "1.0.0-rc5"
   }
 }

@@ -25,6 +25,9 @@ initCommonCoffee = (grunt, config) ->
       files:
         'public/vendor.js': [
           'components/jquery/jquery.js'
+          'components/underscore/underscore.js'
+          'components/backbone/backbone.js'
+          'components/marionette/lib/backbone.marionette.js'
           'components/bootstrap-sass/js/bootstrap-tooltip.js'
           'components/bootstrap-sass/js/bootstrap-affix.js'
           'components/bootstrap-sass/js/bootstrap-alert.js'
