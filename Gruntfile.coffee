@@ -4,7 +4,11 @@ module.exports = (grunt) ->
 
   grunt.loadNpmTasks 'grunt-commoncoffee'
   grunt.loadNpmTasks 'grunt-compass'
+
   grunt.loadNpmTasks 'grunt-contrib-jade'
+  grunt.renameTask('jade', 'jade2html')
+  grunt.loadNpmTasks 'grunt-jade-plugin'
+  grunt.renameTask('jade', 'jade2js')
 
   grunt.loadNpmTasks 'grunt-regarde'
   grunt.loadNpmTasks 'grunt-contrib-connect'
@@ -55,17 +59,17 @@ module.exports = (grunt) ->
         files: 'test/**/*.coffee'
         tasks: ['commoncoffee:test']
 
-      jade:
-        files: '**/*.jade'
-        tasks: ['jade:dev']
+      jade2html:
+        files: ['app/pages/**/*.jade', 'test/*.jade']
+        tasks: ['jade2html:dev']
+
+      jade2js:
+        files: ['app/templates/**/*.jade']
+        tasks: ['jade2js']
 
       public:
         files: 'public/**/*'
         tasks: ["livereload"]
-        #spawn: true
-        #tasks: ["livereload:<%= grunt.regarde.changed %>"]
-        #events: true
-
 
 
     compass:
@@ -75,13 +79,13 @@ module.exports = (grunt) ->
         images: '.'
         importPath: 'components'
 
-    jade:
+    jade2html:
       dev:
         options:
           pretty: true
           data:
             debug: true
-            javascripts: ['vendor.js', 'app.js']
+            javascripts: ['vendor.js', 'templates.js', 'app.js']
         files:
           'public/index.html': 'app/pages/index.jade'
           'public/test.html': 'test/test.jade'
@@ -94,6 +98,13 @@ module.exports = (grunt) ->
         files:
           'public/index.html': 'app/pages/index.jade'
 
+    jade2js:
+      app:
+        options:
+          namespace: 'JST'
+        files:
+          'public/templates.js': 'app/templates/**/*.jade'
+
     connect:
       livereload:
         options:
@@ -105,8 +116,14 @@ module.exports = (grunt) ->
             [snippet, mount]
       
 
-  grunt.registerTask 'default', ['commoncoffee', 'compass', 'jade:dev']
-  grunt.registerTask 'live', ['livereload-start', 'connect', 'regarde']
+  grunt.registerTask 'default',
+    ['commoncoffee', 'compass', 'jade2html:dev', 'jade2js']
+
+  grunt.registerTask 'production',
+    ['commoncoffee', 'compass', 'jade2html:production', 'jade2js']
+
+  grunt.registerTask 'live',
+    ['livereload-start', 'connect', 'regarde']
 
 
 
