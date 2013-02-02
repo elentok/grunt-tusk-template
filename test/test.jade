@@ -1,0 +1,15 @@
+!!!5
+html
+  head
+    link(rel='stylesheet', href='../components/mocha/mocha.css')
+  body
+    #mocha
+
+    each src in javascripts
+      script(src=src)
+    script(src='test_vendor.js')
+    script(type='text/javascript')
+      mocha.setup('bdd')
+    script(src='test.js')
+    script(type='text/javascript')
+      mocha.run()

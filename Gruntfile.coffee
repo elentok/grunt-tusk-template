@@ -18,6 +18,24 @@ module.exports = (grunt) ->
           runtime: false
         files:
           'public/vendor.js': ['components/jquery/jquery.js']
+      test:
+        options:
+          wrap: false
+          runtime: false
+        files:
+          'public/test.js': ['test/**/*.coffee']
+      test_vendor:
+        options:
+          wrap: false
+          runtime: false
+        files:
+          'public/test_vendor.js': [
+            'components/mocha/mocha.js',
+            'components/chai/chai.js'
+          ]
+
+
+
 
     watch:
       app_coffee:
@@ -30,6 +48,13 @@ module.exports = (grunt) ->
       app_compass:
         files: 'app/stylesheets/**/*.scss'
         tasks: ['compass:app']
+        options:
+          debouceDelay: 100
+          interrupt: true
+
+      test_coffee:
+        files: 'test/**/*.coffee'
+        tasks: ['commoncoffee:test']
         options:
           debouceDelay: 100
           interrupt: true
@@ -51,6 +76,7 @@ module.exports = (grunt) ->
             javascripts: ['vendor.js', 'app.js']
         files:
           'public/index.html': 'app/pages/index.jade'
+          'public/test.html': 'test/test.jade'
 
       production:
         options:
