@@ -2,3 +2,5 @@
 /components
 /.sass-cache
 /public
+/build
+tags
