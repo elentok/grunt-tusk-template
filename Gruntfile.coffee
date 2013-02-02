@@ -1,9 +1,14 @@
+path = require 'path'
+
 module.exports = (grunt) ->
 
   grunt.loadNpmTasks 'grunt-commoncoffee'
-  grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-compass'
   grunt.loadNpmTasks 'grunt-contrib-jade'
+
+  grunt.loadNpmTasks 'grunt-regarde'
+  grunt.loadNpmTasks 'grunt-contrib-connect'
+  grunt.loadNpmTasks 'grunt-contrib-livereload'
 
   grunt.initConfig
     commoncoffee:
@@ -37,27 +42,30 @@ module.exports = (grunt) ->
 
 
 
-    watch:
+    regarde:
       app_coffee:
         files: 'app/coffee/**/*.coffee'
         tasks: ['commoncoffee:app']
-        options:
-          debouceDelay: 100
-          interrupt: true
 
       app_compass:
         files: 'app/stylesheets/**/*.scss'
         tasks: ['compass:app']
-        options:
-          debouceDelay: 100
-          interrupt: true
 
       test_coffee:
         files: 'test/**/*.coffee'
         tasks: ['commoncoffee:test']
-        options:
-          debouceDelay: 100
-          interrupt: true
+
+      jade:
+        files: '**/*.jade'
+        tasks: ['jade:dev']
+
+      public:
+        files: 'public/**/*'
+        tasks: ["livereload"]
+        #spawn: true
+        #tasks: ["livereload:<%= grunt.regarde.changed %>"]
+        #events: true
+
 
 
     compass:
@@ -85,9 +93,20 @@ module.exports = (grunt) ->
             javascripts: ['app.min.js']
         files:
           'public/index.html': 'app/pages/index.jade'
+
+    connect:
+      livereload:
+        options:
+          port: 9001
+          middleware: (connect, options) ->
+            utils = require('grunt-contrib-livereload/lib/utils')
+            snippet = utils.livereloadSnippet
+            mount = connect.static(path.resolve('.'))
+            [snippet, mount]
       
 
   grunt.registerTask 'default', ['commoncoffee', 'compass', 'jade:dev']
+  grunt.registerTask 'live', ['livereload-start', 'connect', 'regarde']
 
 
 

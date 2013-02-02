@@ -12,4 +12,4 @@ html
       mocha.setup('bdd')
     script(src='test.js')
     script(type='text/javascript')
-      mocha.run()
+      $(document).ready(function() { mocha.run(); });

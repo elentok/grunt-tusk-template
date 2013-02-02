@@ -4,9 +4,13 @@
   "dependencies": {
     "grunt": ">=0.4",
     "grunt-commoncoffee": "https://github.com/elentok/grunt-commoncoffee/tarball/master",
-    "grunt-contrib-watch": ">= 0.2.0rc7",
     "grunt-compass": "*",
     "grunt-contrib-jade": ">=0.4.0rc7",
+
+    "grunt-regarde": "*",
+    "grunt-contrib-connect": "*",
+    "grunt-contrib-livereload": "https://github.com/gruntjs/grunt-contrib-livereload/tarball/master",
+
     "bower": "0.7.0"
   },
   "devDependencies": {
