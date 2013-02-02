@@ -1,121 +1,124 @@
 path = require 'path'
 
-module.exports = (grunt) ->
-
+# commoncoffee {{{1
+initCommonCoffee = (grunt, config) ->
   grunt.loadNpmTasks 'grunt-commoncoffee'
-  grunt.loadNpmTasks 'grunt-compass'
 
+  config.regarde.app_coffee =
+    files: 'app/coffee/**/*.coffee'
+    tasks: ['commoncoffee:app']
+
+  config.regardetest_coffee =
+    files: 'test/**/*.coffee'
+    tasks: ['commoncoffee:test']
+
+  config.commoncoffee =
+    app:
+      options:
+        root: 'app/coffee'
+      files:
+        'public/app.js': ['app/coffee/**/*.coffee'],
+    vendor:
+      options:
+        wrap: false
+        runtime: false
+      files:
+        'public/vendor.js': ['components/jquery/jquery.js']
+    test:
+      options:
+        wrap: false
+        runtime: false
+      files:
+        'public/test.js': ['test/**/*.coffee']
+    test_vendor:
+      options:
+        wrap: false
+        runtime: false
+      files:
+        'public/test_vendor.js': [
+          'components/mocha/mocha.js',
+          'components/chai/chai.js'
+        ]
+
+# jade2html {{{1
+initJade2html = (grunt, config) ->
   grunt.loadNpmTasks 'grunt-contrib-jade'
   grunt.renameTask('jade', 'jade2html')
+
+  config.regarde.jade2html =
+    files: ['app/pages/**/*.jade', 'test/*.jade']
+    tasks: ['jade2html:dev']
+
+  config.jade2html =
+    dev:
+      options:
+        pretty: true
+        data:
+          debug: true
+          javascripts: ['vendor.js', 'templates.js', 'app.js']
+      files:
+        'public/index.html': 'app/pages/index.jade'
+        'public/test.html': 'test/test.jade'
+    production:
+      options:
+        data:
+          debug: false
+          javascripts: ['app.min.js']
+      files:
+        'public/index.html': 'app/pages/index.jade'
+
+# jade2js {{{1
+
+initJade2js = (grunt, config) ->
   grunt.loadNpmTasks 'grunt-jade-plugin'
   grunt.renameTask('jade', 'jade2js')
 
-  grunt.loadNpmTasks 'grunt-regarde'
+  config.regarde.jade2js =
+    files: ['app/templates/**/*.jade']
+    tasks: ['jade2js']
+
+  config.jade2js =
+    app:
+      options:
+        namespace: 'JST'
+      files:
+        'public/templates.js': 'app/templates/**/*.jade'
+
+# compass {{{1
+initCompass = (grunt, config) ->
+  grunt.loadNpmTasks 'grunt-compass'
+  config.regarde.app_compass =
+    files: 'app/stylesheets/**/*.scss'
+    tasks: ['compass:app']
+
+  config.compass =
+    app:
+      src: 'app/stylesheets'
+      dest: 'public'
+      images: '.'
+      importPath: 'components'
+
+# livereload {{{1
+initLiveReload = (grunt, config) ->
   grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-contrib-livereload'
 
-  grunt.initConfig
-    commoncoffee:
-      app:
-        options:
-          root: 'app/coffee'
-        files:
-          'public/app.js': ['app/coffee/**/*.coffee'],
-      vendor:
-        options:
-          wrap: false
-          runtime: false
-        files:
-          'public/vendor.js': ['components/jquery/jquery.js']
-      test:
-        options:
-          wrap: false
-          runtime: false
-        files:
-          'public/test.js': ['test/**/*.coffee']
-      test_vendor:
-        options:
-          wrap: false
-          runtime: false
-        files:
-          'public/test_vendor.js': [
-            'components/mocha/mocha.js',
-            'components/chai/chai.js'
-          ]
+  config.regarde.public =
+    files: 'public/**/*'
+    tasks: ["livereload"]
 
-
-
-
-    regarde:
-      app_coffee:
-        files: 'app/coffee/**/*.coffee'
-        tasks: ['commoncoffee:app']
-
-      app_compass:
-        files: 'app/stylesheets/**/*.scss'
-        tasks: ['compass:app']
-
-      test_coffee:
-        files: 'test/**/*.coffee'
-        tasks: ['commoncoffee:test']
-
-      jade2html:
-        files: ['app/pages/**/*.jade', 'test/*.jade']
-        tasks: ['jade2html:dev']
-
-      jade2js:
-        files: ['app/templates/**/*.jade']
-        tasks: ['jade2js']
-
-      public:
-        files: 'public/**/*'
-        tasks: ["livereload"]
-
-
-    compass:
-      app:
-        src: 'app/stylesheets'
-        dest: 'public'
-        images: '.'
-        importPath: 'components'
-
-    jade2html:
-      dev:
-        options:
-          pretty: true
-          data:
-            debug: true
-            javascripts: ['vendor.js', 'templates.js', 'app.js']
-        files:
-          'public/index.html': 'app/pages/index.jade'
-          'public/test.html': 'test/test.jade'
-
-      production:
-        options:
-          data:
-            debug: false
-            javascripts: ['app.min.js']
-        files:
-          'public/index.html': 'app/pages/index.jade'
-
-    jade2js:
-      app:
-        options:
-          namespace: 'JST'
-        files:
-          'public/templates.js': 'app/templates/**/*.jade'
-
-    connect:
-      livereload:
-        options:
-          port: 9001
-          middleware: (connect, options) ->
-            utils = require('grunt-contrib-livereload/lib/utils')
-            snippet = utils.livereloadSnippet
-            mount = connect.static(path.resolve('.'))
-            [snippet, mount]
-      
-
+  config.connect =
+    livereload:
+      options:
+        port: 9001
+        middleware: (connect, options) ->
+          utils = require('grunt-contrib-livereload/lib/utils')
+          snippet = utils.livereloadSnippet
+          mount = connect.static(path.resolve('.'))
+          [snippet, mount]
+ 
+# registerTasks {{{1
+registerTasks = (grunt) ->
   grunt.registerTask 'default',
     ['commoncoffee', 'compass', 'jade2html:dev', 'jade2js']
 
@@ -125,5 +128,22 @@ module.exports = (grunt) ->
   grunt.registerTask 'live',
     ['livereload-start', 'connect', 'regarde']
 
+# module.exports {{{1
 
+module.exports = (grunt) ->
 
+  grunt.loadNpmTasks 'grunt-regarde'
+
+  config =
+    regarde: {}
+
+  initJade2html(grunt, config)
+  initJade2js(grunt, config)
+  initCommonCoffee(grunt, config)
+  initCompass(grunt, config)
+  initLiveReload(grunt, config)
+
+  grunt.initConfig(config)
+  registerTasks(grunt)
+
+# vim: set foldmethod=marker
