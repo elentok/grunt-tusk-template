@@ -119,13 +119,26 @@ initLiveReload = (grunt, config) ->
           mount = connect.static(path.resolve('.'))
           [snippet, mount]
  
+# copy files {{{1
+initCopy = (grunt, config) ->
+  grunt.loadNpmTasks 'grunt-contrib-copy'
+  config.regarde.images =
+    files: 'app/images/**/*'
+    tasks: ["copy:images"]
+
+  config.copy =
+    images:
+      files: [
+        {expand: true, cwd: 'app/images', src: ['**'], dest: 'public/images/' }
+      ]
+
 # registerTasks {{{1
 registerTasks = (grunt) ->
   grunt.registerTask 'default',
-    ['commoncoffee', 'compass', 'jade2html:dev', 'jade2js']
+    ['commoncoffee', 'compass', 'jade2html:dev', 'jade2js', 'copy']
 
   grunt.registerTask 'production',
-    ['commoncoffee', 'compass', 'jade2html:production', 'jade2js']
+    ['commoncoffee', 'compass', 'jade2html:production', 'jade2js', 'copy']
 
   grunt.registerTask 'live',
     ['livereload-start', 'connect', 'regarde']
@@ -144,6 +157,7 @@ module.exports = (grunt) ->
   initCommonCoffee(grunt, config)
   initCompass(grunt, config)
   initLiveReload(grunt, config)
+  initCopy(grunt, config)
 
   grunt.initConfig(config)
   registerTasks(grunt)

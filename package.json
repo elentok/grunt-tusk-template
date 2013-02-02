@@ -5,6 +5,7 @@
     "grunt": ">=0.4",
     "grunt-commoncoffee": "https://github.com/elentok/grunt-commoncoffee/tarball/master",
     "grunt-compass": "*",
+    "grunt-contrib-copy": "0.4.0rc7",
 
     "grunt-jade-plugin": "0.2.1",
     "grunt-contrib-jade": ">=0.4.0rc7",
