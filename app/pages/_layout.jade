@@ -1,0 +1,12 @@
+!!!5
+html
+  head
+    block styles
+      link(rel='stylesheet', href="app.css")
+  body
+    .container
+      block contents
+
+    each src in javascripts
+      script(src=src)
+    block scripts

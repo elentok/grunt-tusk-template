@@ -1,15 +1,15 @@
-!!!5
-html
-  head
-    link(rel='stylesheet', href='../components/mocha/mocha.css')
-  body
-    #mocha
+extends ../app/pages/_layout
 
-    each src in javascripts
-      script(src=src)
-    script(src='test_vendor.js')
-    script(type='text/javascript')
-      mocha.setup('bdd')
-    script(src='test.js')
-    script(type='text/javascript')
-      $(document).ready(function() { mocha.run(); });
+block styles
+  link(rel='stylesheet', href='../components/mocha/mocha.css')
+
+block contents
+  #mocha
+
+block scripts
+  script(src='test_vendor.js')
+  script(type='text/javascript')
+    mocha.setup('bdd')
+  script(src='test.js')
+  script(type='text/javascript')
+    $(document).ready(function() { mocha.run(); });

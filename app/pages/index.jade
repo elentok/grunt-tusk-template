@@ -1,10 +1,4 @@
-!!!5
-html
-  head
-    each src in javascripts
-      script(src=src)
-    link(rel='stylesheet', href="app.css")
-  body
-    .container
-      .page-header
-        h1 Welcome
+extends _layout
+
+block contents
+  h1 hello
