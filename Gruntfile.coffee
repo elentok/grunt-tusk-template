@@ -153,13 +153,22 @@ initCopy = (grunt, config) ->
           src: ['**'], dest: 'public/images/' }
       ]
 
+initUglify = (grunt, config) ->
+  grunt.loadNpmTasks 'grunt-contrib-uglify'
+
+  config.uglify =
+    production:
+      files:
+        'build/app.min.js': ['public/vendor.js', 'public/templates.js', 'public/app.js']
+  
+
 # registerTasks {{{1
 registerTasks = (grunt) ->
   grunt.registerTask 'default',
     ['commoncoffee', 'compass', 'jade2html:dev', 'jade2js', 'copy']
 
   grunt.registerTask 'production',
-    ['commoncoffee', 'compass', 'jade2html:production', 'jade2js', 'copy']
+    ['commoncoffee', 'compass', 'jade2html:production', 'jade2js', 'copy', 'uglify']
 
   grunt.registerTask 'live',
     ['livereload-start', 'connect', 'regarde']
@@ -179,6 +188,7 @@ module.exports = (grunt) ->
   initCompass(grunt, config)
   initLiveReload(grunt, config)
   initCopy(grunt, config)
+  initUglify(grunt, config)
 
   grunt.initConfig(config)
   registerTasks(grunt)
