@@ -1,9 +1,9 @@
 {
-  "name": "my-grunt-template",
+  "name": "grunt-husk-template",
   "version": "0.0.1",
   "dependencies": {
     "grunt": ">=0.4",
-    "grunt-commoncoffee": "https://github.com/elentok/grunt-commoncoffee/tarball/master",
+    "grunt-husk-coffee": "https://github.com/elentok/grunt-husk-coffee/tarball/master",
     "grunt-compass": "*",
     "grunt-contrib-copy": "0.4.0rc7",
     "grunt-contrib-uglify": "0.1.1rc6",

@@ -1,23 +1,32 @@
+fs = require 'fs'
 path = require 'path'
 
-# commoncoffee {{{1
-initCommonCoffee = (grunt, config) ->
-  grunt.loadNpmTasks 'grunt-commoncoffee'
+# husk_coffee {{{1
+initHuskCoffee = (grunt, config) ->
+  grunt.loadNpmTasks 'grunt-husk-coffee'
 
   config.regarde.app_coffee =
     files: 'app/coffee/**/*.coffee'
-    tasks: ['commoncoffee:app']
+    tasks: ['husk_coffee:app']
 
   config.regarde.test_coffee =
     files: 'test/**/*.coffee'
-    tasks: ['commoncoffee:test']
+    tasks: ['husk_coffee:test']
 
-  config.commoncoffee =
+  config.husk_coffee =
     app:
       options:
         root: 'app/coffee'
       files:
         'public/app.js': ['app/coffee/**/*.coffee'],
+    i18n:
+      options:
+        root: 'app/i18n'
+        join: false
+        runtime: false
+        wrap: false
+      files:
+        'public/i18n/': 'app/i18n/*.coffee'
     vendor:
       options:
         wrap: false
@@ -27,6 +36,7 @@ initCommonCoffee = (grunt, config) ->
           'components/jquery/jquery.js'
           'components/underscore/underscore.js'
           'components/backbone/backbone.js'
+          'components/i18n-js/vendor/assets/javascripts/i18n.js'
           'components/marionette/lib/backbone.marionette.js'
           'components/bootstrap-sass/js/bootstrap-tooltip.js'
           'components/bootstrap-sass/js/bootstrap-affix.js'
@@ -75,7 +85,7 @@ initJade2html = (grunt, config) ->
         pretty: true
         data:
           debug: true
-          javascripts: ['vendor.js', 'templates.js', 'app.js']
+          javascripts: ['vendor.js', 'templates.js', 'i18n/en.js', 'app.js']
       files:
         'public/index.html': 'app/pages/index.jade'
         'public/test.html': 'test/test.jade'
@@ -154,32 +164,52 @@ initCopy = (grunt, config) ->
     dev:
       files: [
         {expand: true, cwd: 'app/images', src: ['**'], dest: 'public/images/' }
-        {expand: true, cwd: 'components/bootstrap-sass/img', src: ['**'], dest: 'public/images/' }
-        {expand: true, cwd: 'components/font-awesome/font', src: ['**'], dest: 'public/fonts/' }
+        {
+          expand: true,
+          cwd: 'components/bootstrap-sass/img',
+          src: ['**'], dest: 'public/images/' }
+        {
+          expand: true,
+          cwd: 'components/font-awesome/font',
+          src: ['**'], dest: 'public/fonts/' }
       ]
     production:
       files: [
         {expand: true, cwd: 'app/images', src: ['**'], dest: 'build/images/' }
-        {expand: true, cwd: 'components/bootstrap-sass/img', src: ['**'], dest: 'build/images/' }
-        {expand: true, cwd: 'components/font-awesome/font', src: ['**'], dest: 'build/fonts/' }
+        {
+          expand: true,
+          cwd: 'components/bootstrap-sass/img',
+          src: ['**'], dest: 'build/images/' }
+        {
+          expand: true,
+          cwd: 'components/font-awesome/font',
+          src: ['**'], dest: 'build/fonts/' }
       ]
 
 initUglify = (grunt, config) ->
   grunt.loadNpmTasks 'grunt-contrib-uglify'
 
+  files =
+    'build/app.js': [
+      'public/vendor.js',
+      'public/templates.js',
+      'public/i18n/en.js',
+      'public/app.js']
+
+  for filename in fs.readdirSync('public/i18n')
+    files["build/i18n/#{filename}"] = "public/i18n/#{filename}"
+
   config.uglify =
     production:
-      files:
-        'build/app.js': ['public/vendor.js', 'public/templates.js', 'public/app.js']
+      files: files
   
-
 # registerTasks {{{1
 registerTasks = (grunt) ->
   grunt.registerTask 'default',
-    ['commoncoffee', 'compass:dev', 'jade2html:dev', 'jade2js', 'copy']
+    ['husk_coffee', 'compass:dev', 'jade2html:dev', 'jade2js', 'copy:dev']
 
   grunt.registerTask 'production',
-    ['commoncoffee', 'compass:production', 'jade2html:production', 'jade2js', 'copy', 'uglify']
+    ['husk_coffee', 'compass:production', 'jade2html:production', 'jade2js', 'copy:production', 'uglify']
 
   grunt.registerTask 'live',
     ['livereload-start', 'connect', 'regarde']
@@ -195,7 +225,7 @@ module.exports = (grunt) ->
 
   initJade2html(grunt, config)
   initJade2js(grunt, config)
-  initCommonCoffee(grunt, config)
+  initHuskCoffee(grunt, config)
   initCompass(grunt, config)
   initLiveReload(grunt, config)
   initCopy(grunt, config)

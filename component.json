@@ -8,6 +8,7 @@
     "font-awesome": "3.0.2",
     "underscore": "1.4.4",
     "backbone": "0.9.10",
-    "marionette": "1.0.0-rc5"
+    "marionette": "1.0.0-rc5",
+    "i18n-js": "git://github.com/fnando/i18n-js"
   }
 }
