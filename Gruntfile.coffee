@@ -1,7 +1,7 @@
 module.exports = (grunt) ->
 
-  husk = require 'grunt-husk'
-  husk.initialize grunt,
+  tusk = require 'grunt-tusk'
+  tusk.initialize grunt,
     scripts:
       vendor: [
         'components/jquery/jquery.js'

@@ -1,9 +1,9 @@
 {
-  "name": "grunt-husk-template",
+  "name": "grunt-tusk-template",
   "version": "0.0.1",
   "dependencies": {
     "grunt": "~0.4.0",
-    "grunt-husk": "https://github.com/elentok/grunt-husk/tarball/master"
+    "grunt-tusk": "0.0.x"
   },
   "devDependencies": {
   },

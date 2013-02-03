@@ -1,6 +1,4 @@
-Grunt Husk Template
+Grunt Tusk Template
 ===================
 
-This is my customized grunt template.
-
-TODO: extract most of Gruntfile to "grunt-husk" plugin
+This is the basic template for working with the "grunt-tusk" plugin
