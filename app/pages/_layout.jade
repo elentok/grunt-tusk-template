@@ -2,19 +2,19 @@
 html
   head
     block styles
-      link(rel='stylesheet', href="app.css")
+      link(rel='stylesheet', href="stylesheets/app.css")
   body
     .container
       block contents
 
-    each src in javascripts
-      script(src=src)
-    script(type="text/javascript")
-      (function() {
-        var locale = /locale=([a-zA-Z-_]+)/.exec(window.location.href);
-        if (locale && locale.length === 2) {
-          I18n.locale = locale[1];
-          document.write("\x3Cscript src='i18n/" + I18n.locale + ".js' charset='UTF-8'>\x3C/script>");
-        }
-      })();
     block scripts
+      each src in javascripts
+        script(src=src)
+      script(type="text/javascript")
+        (function() {
+          var locale = /locale=([a-zA-Z-_]+)/.exec(window.location.href);
+          if (locale && locale.length === 2) {
+            I18n.locale = locale[1];
+            document.write("\x3Cscript src='i18n/" + I18n.locale + ".js' charset='UTF-8'>\x3C/script>");
+          }
+        })();

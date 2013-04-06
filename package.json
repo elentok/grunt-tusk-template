@@ -2,8 +2,8 @@
   "name": "grunt-tusk-template",
   "version": "0.0.1",
   "dependencies": {
-    "grunt": "~0.4.0",
-    "grunt-tusk": "0.0.x"
+    "grunt": "0.4.1",
+    "grunt-tusk": "0.1.3"
   },
   "devDependencies": {
   },
